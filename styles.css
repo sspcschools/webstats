@@ -1,0 +1,17 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+}
+
+.status {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+h1, h2 {
+  margin-bottom: 10px;
+}
+
+#libraryStatus, #directStatus {
+  margin-bottom: 20px;
+}
