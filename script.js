@@ -1,21 +1,30 @@
-const libraryUrl = 'https://library.sspcschools.com';
-const directUrl = 'https://direct.sspcschools.com';
+const urls = [
+  { name: 'Library', url: 'https://library.sspcschools.com' },
+  { name: 'Direct', url: 'https://direct.sspcschools.com' },
+  { name: 'SSPC Schools', url: 'https://sspcschools.com' },
+  { name: 'Johnson Elementary', url: 'https://johnsones.sspcschools.com' },
+  { name: 'Monroe Middle', url: 'https://monroems.sspcschools.com' }
+];
 
 async function checkStatus(url) {
   try {
-    const response = await fetch(url);
+    const response = await fetch(url.url);
+    console.log(`[${url.name}] Response status:`, response.status);
     return response.ok ? 'Online' : 'Offline';
   } catch (error) {
+    console.error(`[${url.name}] Error:`, error);
     return 'Offline';
   }
 }
 
 async function updateStatus() {
-  const libraryStatus = await checkStatus(libraryUrl);
-  const directStatus = await checkStatus(directUrl);
-
-  document.getElementById('libraryStatus').innerHTML = `<h2>Library Website Status:</h2><p>${libraryStatus}</p>`;
-  document.getElementById('directStatus').innerHTML = `<h2>Direct Website Status:</h2><p>${directStatus}</p>`;
+  for (const url of urls) {
+    const status = await checkStatus(url);
+    document.getElementById('status').innerHTML += `<div id="${url.name}Status">
+                                                      <h2>${url.name} Website Status:</h2>
+                                                      <p>${status}</p>
+                                                    </div>`;
+  }
 }
 
 updateStatus();
